@@ -134,7 +134,7 @@ function Header() {
             className={classes.headerItem}
             style={{ marginLeft: 30 }}
           >
-            How it Work
+            How it Works
           </div>
           <div
             onClick={() => history.push('/')}
