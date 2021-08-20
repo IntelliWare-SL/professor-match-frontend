@@ -12,7 +12,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROFESSOR_MATCH_35CE6 }}'
-          projectId: professor-match-35ce6
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_PROFESSOR_MATCH }}'
+          projectId: app-professor-match
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels

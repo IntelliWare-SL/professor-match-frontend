@@ -48,7 +48,6 @@ export function* getNewNotifications() {
       data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: actionTypes.GET_NOTIFICATIONS_FAILED,
     });
