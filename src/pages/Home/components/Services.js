@@ -5,10 +5,11 @@ import ArrowRightAltOutlinedIcon from '@material-ui/icons/ArrowRightAltOutlined'
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 
 const useStyles = makeStyles(() => ({
   main: {
-    padding: '50px 30px',
+    padding: '70px 30px',
     background: '#ffffff',
   },
 }));
@@ -95,7 +96,12 @@ function Services() {
         </Grid>
 
         <Grid
-          style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 50 }}
+          style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            marginTop: 50,
+            padding: '0px 100px',
+          }}
           container
           justifyContent="space-around"
           alignItems="center"
@@ -105,23 +111,21 @@ function Services() {
             <div style={{ marginBottom: 10 }}>Signup & Create a Profile</div>
             <div style={{ marginTop: 10, fontSize: 18 }}>Step 1</div>
           </Grid>
+
           <Grid item xs={1}>
             <ArrowRightAltOutlinedIcon style={{ fontSize: 120 }} />
           </Grid>
+
           <Grid item xs={2} style={{ lineHeight: 1.5 }}>
-            <div style={{ marginBottom: 10 }}>
-              <u>Search for a Match:</u>
-            </div>
-            <div style={{ fontWeight: 'normal' }}>
-              University finds Labor
-              <br />
-              Labor finds University
-            </div>
+            <SearchRoundedIcon style={{ fontSize: 60, marginBottom: 10 }} />
+            <div style={{ marginBottom: 10 }}>Search for a Match</div>
             <div style={{ marginTop: 10, fontSize: 18 }}>Step 2</div>
           </Grid>
+
           <Grid item xs={1}>
             <ArrowRightAltOutlinedIcon style={{ fontSize: 120 }} />
           </Grid>
+
           <Grid item xs={3}>
             <PeopleAltRoundedIcon style={{ fontSize: 60, marginBottom: 10 }} />
             <div style={{ marginBottom: 10 }}>
