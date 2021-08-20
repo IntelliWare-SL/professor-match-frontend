@@ -4,24 +4,34 @@ import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import ArrowRightAltOutlinedIcon from '@material-ui/icons/ArrowRightAltOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  main: {
+    padding: '50px 30px',
+    background: '#ffffff',
+  },
+}));
 
 function Services() {
+  const classes = useStyles();
   return (
-    <div
-      style={{
-        padding: '50px 30px',
-        background: '#cccc',
-      }}
-    >
+    <div className={classes.main}>
       <Grid container>
+        <Grid xs={6} item style={{ textAlign: 'center' }}>
+          <img
+            style={{ objectFit: 'cover', height: 400, borderRadius: 10 }}
+            alt="doctor"
+            src="https://rotaryhall.com/wp-content/uploads/2020/11/lecturers.jpg"
+          />
+        </Grid>
         <Grid
-          xs={12}
+          xs={6}
           item
           style={{
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'column',
-            marginBottom: 40,
           }}
         >
           <div
@@ -29,15 +39,54 @@ function Services() {
           >
             What is Professor Match ?
           </div>
-          <div style={{ fontSize: 18, marginTop: 35 }}>
+          <div style={{ fontSize: 18, marginTop: 45 }}>
             Professor Match is designed for three groups:
-            <ol style={{ lineHeight: 2 }}>
+            <ul style={{ lineHeight: 3, listStyle: 'none' }}>
               <li>
-                Department chairs or deans searching for adjunct professors
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: 600,
+                  }}
+                >
+                  <CheckRoundedIcon
+                    style={{ color: '#00b074', marginRight: 20 }}
+                  />
+                  <div>
+                    Department chairs or deans searching for adjunct professors
+                  </div>
+                </div>
               </li>
-              <li>Professors looking for guest lecturers</li>
-              <li>People who want to fill either of those roles</li>
-            </ol>
+              <li>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: 600,
+                  }}
+                >
+                  <CheckRoundedIcon
+                    style={{ color: '#00b074', marginRight: 20 }}
+                  />
+                  <div>Professors looking for guest lecturers</div>
+                </div>
+              </li>
+              <li>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: 600,
+                  }}
+                >
+                  <CheckRoundedIcon
+                    style={{ color: '#00b074', marginRight: 20 }}
+                  />
+                  <div>People who want to fill either of those roles</div>
+                </div>
+              </li>
+            </ul>
           </div>
           <div style={{ marginTop: 20, fontSize: 18 }}>
             Where can they meet?{' '}
@@ -46,14 +95,14 @@ function Services() {
         </Grid>
 
         <Grid
-          style={{ textAlign: 'center', fontWeight: 'bold' }}
+          style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 50 }}
           container
           justifyContent="space-around"
           alignItems="center"
         >
           <Grid item xs={2}>
+            <PersonRoundedIcon style={{ fontSize: 60, marginBottom: 10 }} />
             <div style={{ marginBottom: 10 }}>Signup & Create a Profile</div>
-            <PersonRoundedIcon style={{ fontSize: 60 }} />
             <div style={{ marginTop: 10, fontSize: 18 }}>Step 1</div>
           </Grid>
           <Grid item xs={1}>
@@ -74,10 +123,10 @@ function Services() {
             <ArrowRightAltOutlinedIcon style={{ fontSize: 120 }} />
           </Grid>
           <Grid item xs={3}>
+            <PeopleAltRoundedIcon style={{ fontSize: 60, marginBottom: 10 }} />
             <div style={{ marginBottom: 10 }}>
               The algorithm finds the matches Connect with each other!
             </div>
-            <PeopleAltRoundedIcon style={{ fontSize: 60 }} />
             <div style={{ marginTop: 10, fontSize: 18 }}>Step 3</div>
           </Grid>
         </Grid>
