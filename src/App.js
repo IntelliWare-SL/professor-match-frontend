@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import HomePage from './pages/Home/HomePage';
 import 'react-toastify/dist/ReactToastify.css';
+import SignInPage from './pages/SignIn/SignInPage';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <HomePage />
+          </Route>
+          <Route exact path="/sign-in">
+            <SignInPage />
           </Route>
         </Switch>
       </Router>

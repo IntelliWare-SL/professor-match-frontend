@@ -154,8 +154,11 @@ function Header() {
           </div>
           {!idToken ? (
             <>
-              <div className={classes.btn} onClick={openSignUpForm}>
-                LOGIN
+              <div
+                className={classes.btn}
+                onClick={() => history.push('/sign-in')}
+              >
+                SIGN IN
               </div>
             </>
           ) : (
