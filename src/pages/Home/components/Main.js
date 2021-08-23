@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import logoImage from '../../../assets/logo.png';
 
 const useStyles = makeStyles(() => ({
@@ -25,6 +26,8 @@ const useStyles = makeStyles(() => ({
 // component for displaying the name health check in the home page
 const MyComponent = () => {
   const classes = useStyles();
+  const history = useHistory();
+
   return (
     <div>
       <div
@@ -67,13 +70,23 @@ const MyComponent = () => {
               <div style={{ marginBottom: 15, fontWeight: 'bold' }}>
                 Professor or Dept Chair?
               </div>
-              <Button className={classes.blueBtn}>Sign Up</Button>
+              <Button
+                onClick={() => history.push('sign-up/professor')}
+                className={classes.blueBtn}
+              >
+                Sign Up
+              </Button>
             </div>
             <div>
               <div style={{ marginBottom: 15, fontWeight: 'bold' }}>
                 Want to be an Adjunct Professor or Guest Lecturer?
               </div>
-              <Button className={classes.greenBtn}>Sign Up</Button>
+              <Button
+                onClick={() => history.push('sign-up/lecturer')}
+                className={classes.greenBtn}
+              >
+                Sign Up
+              </Button>
             </div>
           </div>
         </div>

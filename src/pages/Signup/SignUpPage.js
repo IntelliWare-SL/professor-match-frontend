@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
 
@@ -22,12 +23,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function HomePage() {
+function HomePage({ match }) {
   const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    window.history.scrollRestoration = 'manual';
-  }, []);
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -40,7 +38,7 @@ function HomePage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: 'calc(100vh - 80px)',
+          margin: '50px 0px',
         }}
       >
         <div
@@ -50,13 +48,46 @@ function HomePage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            width: 300,
+            width: 320,
             background: '#F3F7FB',
           }}
         >
-          <div style={{ fontSize: 40, fontWeight: 'bold' }}>Sign In</div>
-          <div style={{ marginTop: 45, width: '100%' }}>
-            <div style={{ fontWeight: '500', marginBottom: 7 }}>User Name</div>
+          <div style={{ fontSize: 40, fontWeight: 'bold' }}>Create Account</div>
+          <div style={{ marginTop: 39 }}>
+            {match.params.type === 'professor'
+              ? 'Want to hire or find a Guest Lecturer or Adjunct?'
+              : 'Want to become an Adjunct Professor or Guest Lecturer?'}
+          </div>
+          <div style={{ marginTop: 30, width: '100%' }}>
+            <div style={{ fontWeight: '500', marginBottom: 7 }}>First Name</div>
+            <TextField
+              inputProps={{
+                style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
+              }}
+              style={{ background: 'white' }}
+              fullWidth
+              size="small"
+              type="text"
+              variant="outlined"
+              placeholder="First Name"
+            />
+          </div>
+          <div style={{ marginTop: 20, width: '100%' }}>
+            <div style={{ fontWeight: '500', marginBottom: 7 }}>Last Name</div>
+            <TextField
+              inputProps={{
+                style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
+              }}
+              style={{ background: 'white' }}
+              fullWidth
+              size="small"
+              type="text"
+              variant="outlined"
+              placeholder="Last Name"
+            />
+          </div>
+          <div style={{ marginTop: 20, width: '100%' }}>
+            <div style={{ fontWeight: '500', marginBottom: 7 }}>Email</div>
             <TextField
               inputProps={{
                 style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
@@ -66,7 +97,7 @@ function HomePage() {
               size="small"
               type="email"
               variant="outlined"
-              placeholder="User Name"
+              placeholder="Email"
             />
           </div>
           <div style={{ marginTop: 20, width: '100%' }}>
@@ -84,7 +115,7 @@ function HomePage() {
             />
           </div>
           <div style={{ marginTop: 35 }} className={classes.btn}>
-            SIGN IN
+            SIGN UP
           </div>
         </div>
       </div>

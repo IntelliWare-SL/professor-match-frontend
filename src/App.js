@@ -5,6 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import HomePage from './pages/Home/HomePage';
 import 'react-toastify/dist/ReactToastify.css';
 import SignInPage from './pages/SignIn/SignInPage';
+import SignUpPage from './pages/Signup/SignUpPage';
+import ProfessorCompleteProfilePage from './pages/ProfessorCompleteProfile/ProfessorCompleteProfilePage';
 
 function App() {
   return (
@@ -17,6 +19,12 @@ function App() {
           <Route exact path="/sign-in">
             <SignInPage />
           </Route>
+          <Route exact path="/sign-up/:type" component={SignUpPage} />
+          <Route
+            exact
+            path="/complete-profile/professor"
+            component={ProfessorCompleteProfilePage}
+          />
         </Switch>
       </Router>
       <ToastContainer />
