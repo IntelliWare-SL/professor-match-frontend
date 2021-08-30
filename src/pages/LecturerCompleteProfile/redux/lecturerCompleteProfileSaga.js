@@ -8,10 +8,11 @@ export function* lecturerCompleteProfile(action) {
   const Axios = yield createRequest();
   const user = yield select((state) => state.signInReducer.user);
   try {
-    const { data } = yield Axios.post(
+    const { data } = yield Axios.patch(
       `lecturer/editLecturer/${user._id}`,
       action.data
     );
+    window.location.href = '/profile';
     yield put({
       type: actionTypes.LECTURER_EDIT_PROFILE_SUCCESS,
       data,

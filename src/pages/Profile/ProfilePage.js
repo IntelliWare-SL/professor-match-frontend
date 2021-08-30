@@ -41,6 +41,18 @@ function HomePage() {
 
   const classes = useStyles();
 
+  React.useEffect(() => {
+    if (!user) {
+      history.push('/');
+    } else if (!user.isProfileCompleted) {
+      if (user.type === 'lecturer') {
+        history.push('/complete-profile/lecturer');
+      } else {
+        history.push('/complete-profile/professor');
+      }
+    }
+  }, [user]);
+
   return (
     <div>
       <Header />

@@ -121,7 +121,7 @@ function Header() {
 
           {idToken && (
             <div
-              onClick={() => history.push('/')}
+              onClick={() => history.push('/profile')}
               className={classes.headerItem}
               style={{ marginLeft: 30 }}
             >
@@ -140,11 +140,7 @@ function Header() {
             </>
           ) : (
             <>
-              <div
-                style={{ marginLeft: 30 }}
-                className={classes.headerItem}
-                onClick={logoutThisUser}
-              >
+              <div className={classes.btn} onClick={logoutThisUser}>
                 LOG OUT
               </div>
             </>
