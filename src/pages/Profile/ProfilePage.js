@@ -2,27 +2,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Avatar,
-  Checkbox,
-  Grid,
-  MenuItem,
-  Radio,
-  Select,
-  TextField,
-} from '@material-ui/core';
+import { Avatar, Grid } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import CallIcon from '@material-ui/icons/Call';
+import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import BookIcon from '@material-ui/icons/Book';
+import LanguageIcon from '@material-ui/icons/Language';
 import Footer from '../Home/components/Footer';
 import Header from '../../common/Header';
 import { getProfile } from './redux/profileActions';
-import profileReducer from './redux/profileReducer';
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -218,6 +211,40 @@ function HomePage() {
                       />
                       <div>GitHub</div>
                     </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginTop: 10,
+                      }}
+                    >
+                      <BookIcon
+                        style={{
+                          marginLeft: 20,
+                          fontSize: 40,
+                          display: 'block',
+                          marginRight: 10,
+                        }}
+                      />
+                      <div>Blog</div>
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginTop: 10,
+                      }}
+                    >
+                      <LanguageIcon
+                        style={{
+                          marginLeft: 20,
+                          fontSize: 40,
+                          display: 'block',
+                          marginRight: 10,
+                        }}
+                      />
+                      <div>Personal Portfolio</div>
+                    </div>
                   </div>
                 </Grid>
               )}
@@ -250,7 +277,7 @@ function HomePage() {
                       marginTop: 30,
                     }}
                   >
-                    <CallIcon
+                    <EmailRoundedIcon
                       style={{
                         display: 'block',
                         marginRight: 10,

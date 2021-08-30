@@ -667,6 +667,30 @@ function HomePage() {
                 placeholder="Insert Link"
               />
             </Grid>
+
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <div style={{ width: 100 }}>Twitter</div>
+              <TextField
+                value={twitter}
+                onChange={(e) => setTwitter(e.target.value)}
+                inputProps={{
+                  style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
+                }}
+                style={{ background: 'white', width: 500, marginLeft: 40 }}
+                size="medium"
+                type="text"
+                variant="outlined"
+                placeholder="Insert Link"
+              />
+            </Grid>
           </Grid>
         </div>
         <div
