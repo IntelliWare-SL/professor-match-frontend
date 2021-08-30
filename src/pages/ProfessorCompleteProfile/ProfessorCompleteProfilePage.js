@@ -6,6 +6,8 @@ import { Checkbox, Grid, MenuItem, Select, TextField } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
+import { profCompleteProfile } from './redux/professorCompleteProfileActions';
+import signInReducer from '../SignIn/redux/signInReducer';
 
 const departments = [
   {
@@ -60,6 +62,16 @@ const useStyles = makeStyles(() => ({
 function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const user = useSelector((state) => state.signInReducer.user);
+
+  React.useEffect(() => {
+    if (!user) {
+      history.push('/');
+    } else if (user.type !== 'professor') {
+      history.push('/');
+    }
+  }, [user]);
 
   const [schoolName, setSchoolName] = React.useState('');
   const [campusLocation, setCampusLocation] = React.useState('');
@@ -129,6 +141,7 @@ function HomePage() {
       req.recruitingDepartment.push(reqSelectedDepartment2);
     }
     console.log(req);
+    dispatch(profCompleteProfile(req));
   };
 
   return (

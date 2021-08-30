@@ -6,11 +6,8 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import logoImage from '../assets/logo.png';
-import {
-  formsOpenClose,
-  logOutUser,
-  getNewNotifications,
-} from '../pages/Home/redux/homeActions';
+import { loginOutUser } from '../pages/SignIn/redux/signInActions';
+import signInReducer from '../pages/SignIn/redux/signInReducer';
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -58,9 +55,8 @@ const useStyles = makeStyles(() => ({
 function Header() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const idToken = useSelector((state) => state.homeReducer.idToken);
-  const user = useSelector((state) => state.homeReducer.user);
-  const notifications = useSelector((state) => state.homeReducer.notifications);
+  const idToken = useSelector((state) => state.signInReducer.idToken);
+  const user = useSelector((state) => state.signInReducer.user);
   const [scrollY, setScrollY] = React.useState(0);
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -70,12 +66,6 @@ function Header() {
       setScrollY(window.scrollY);
     });
   }, []);
-
-  React.useEffect(() => {
-    if (idToken) {
-      dispatch(getNewNotifications());
-    }
-  }, [idToken]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -92,17 +82,9 @@ function Header() {
     window.scrollTo(0, 0);
   };
 
-  const openLoginForm = () => {
-    dispatch(formsOpenClose({ loginFormOpen: true, RegisterFormOpen: false }));
-  };
-
-  const openSignUpForm = () => {
-    dispatch(formsOpenClose({ loginFormOpen: false, RegisterFormOpen: true }));
-  };
-
   const logoutThisUser = () => {
     localStorage.removeItem('idToken');
-    dispatch(logOutUser());
+    dispatch(loginOutUser());
     history.push('/');
   };
 
@@ -136,22 +118,17 @@ function Header() {
           >
             How it Works
           </div>
-          <div
-            onClick={() => history.push('/')}
-            className={classes.headerItem}
-            style={{ marginLeft: 30 }}
-          >
-            Get Started
-          </div>
 
-          <div>
-            <div style={{ fontWeight: 'bold' }}>
-              {user && user.name}
-              {user && user.field
-                ? ` - ${user.field}`
-                : user && ` - Registered Patient`}
+          {idToken && (
+            <div
+              onClick={() => history.push('/')}
+              className={classes.headerItem}
+              style={{ marginLeft: 30 }}
+            >
+              Profile
             </div>
-          </div>
+          )}
+
           {!idToken ? (
             <>
               <div
@@ -163,19 +140,14 @@ function Header() {
             </>
           ) : (
             <>
-              <div className={classes.headerItem} onClick={logoutThisUser}>
+              <div
+                style={{ marginLeft: 30 }}
+                className={classes.headerItem}
+                onClick={logoutThisUser}
+              >
                 LOG OUT
               </div>
             </>
-          )}
-          {user && (
-            <div style={{ marginLeft: 10 }}>
-              <IconButton aria-describedby={id} onClick={handleClick}>
-                <Badge badgeContent={notifications.length} color="secondary">
-                  <NotificationsNoneIcon />
-                </Badge>
-              </IconButton>
-            </div>
           )}
         </div>
       </div>

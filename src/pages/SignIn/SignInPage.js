@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
+import { loginUser } from './redux/signInActions';
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -24,6 +25,12 @@ const useStyles = makeStyles(() => ({
 
 function HomePage() {
   const dispatch = useDispatch();
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const loginThisUser = () => {
+    dispatch(loginUser({ email, password }));
+  };
 
   React.useEffect(() => {
     window.history.scrollRestoration = 'manual';
@@ -63,6 +70,8 @@ function HomePage() {
               }}
               style={{ background: 'white' }}
               fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               size="small"
               type="email"
               variant="outlined"
@@ -78,12 +87,18 @@ function HomePage() {
               style={{ background: 'white' }}
               fullWidth
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               size="small"
               variant="outlined"
               placeholder="Password"
             />
           </div>
-          <div style={{ marginTop: 35 }} className={classes.btn}>
+          <div
+            style={{ marginTop: 35 }}
+            onClick={loginThisUser}
+            className={classes.btn}
+          >
             SIGN IN
           </div>
         </div>

@@ -1,24 +1,20 @@
 import { toast } from 'react-toastify';
 import { put, select } from 'redux-saga/effects';
 import createRequest from '../../../utils/axios';
-import * as actionTypes from './lecturerCompleteProfileTypes';
+import * as actionTypes from './profileTypes';
 
 // this is the request to login a user
 export function* lecturerCompleteProfile(action) {
   const Axios = yield createRequest();
-  const user = yield select((state) => state.signInReducer.user);
   try {
-    const { data } = yield Axios.post(
-      `lecturer/editLecturer/${user._id}`,
-      action.data
-    );
+    const { data } = yield Axios.post(`${action.data.type}/login`, action.data);
     yield put({
-      type: actionTypes.LECTURER_EDIT_PROFILE_SUCCESS,
+      type: actionTypes.GET_PROFILE_SUCCESS,
       data,
     });
   } catch (error) {
     yield put({
-      type: actionTypes.LECTURER_EDIT_PROFILE_ERROR,
+      type: actionTypes.GET_PROFILE_ERROR,
     });
     toast.error(error.response ? error.response.data.message : 'Unknown Error');
   }

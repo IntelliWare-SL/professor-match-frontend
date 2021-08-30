@@ -1,55 +1,24 @@
 import { toast } from 'react-toastify';
 import { put, select } from 'redux-saga/effects';
 import createRequest from '../../../utils/axios';
-import * as actionTypes from './homeActionTypes';
+import * as actionTypes from './professorCompleteProfileTypes';
 
 // this is the request to login a user
-export function* loginUser(action) {
+export function* profCompleteProfile(action) {
   const Axios = yield createRequest();
+  const user = yield select((state) => state.signInReducer.user);
   try {
-    const { data } = yield Axios.post(`${action.data.type}/login`, action.data);
-    localStorage.setItem('idToken', data.token);
+    const { data } = yield Axios.post(
+      `professor/editProfessor/${user._id}`,
+      action.data
+    );
     yield put({
-      type: actionTypes.LOGIN_SUCCESS,
+      type: actionTypes.PROF_EDIT_PROFILE_SUCCESS,
       data,
     });
   } catch (error) {
     yield put({
-      type: actionTypes.LOGIN_ERROR,
-    });
-    toast.error(error.response ? error.response.data.message : 'Unknown Error');
-  }
-}
-
-export function* registerUser(action) {
-  const Axios = yield createRequest();
-  try {
-    const { data } = yield Axios.post(`patient/register`, action.data);
-    toast.success('Registered Successfully');
-    yield put({
-      type: actionTypes.REGISTER_SUCCESS,
-      data,
-    });
-  } catch (error) {
-    yield put({
-      type: actionTypes.REGISTER_ERROR,
-    });
-    toast.error(error.response ? error.response.data.message : 'Unknown Error');
-  }
-}
-
-export function* getNewNotifications() {
-  const user = yield select((state) => state.homeReducer.user);
-  const Axios = yield createRequest();
-  try {
-    const { data } = yield Axios.get(`${user.type}/me/appointment/new`);
-    yield put({
-      type: actionTypes.GET_NOTIFICATIONS_SUCCESS,
-      data,
-    });
-  } catch (error) {
-    yield put({
-      type: actionTypes.GET_NOTIFICATIONS_FAILED,
+      type: actionTypes.PROF_EDIT_PROFILE_ERROR,
     });
     toast.error(error.response ? error.response.data.message : 'Unknown Error');
   }

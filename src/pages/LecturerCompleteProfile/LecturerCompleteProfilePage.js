@@ -13,6 +13,7 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
+import { lecturerCompleteProfile } from './redux/lecturerCompleteProfileActions';
 
 const departments = [
   {
@@ -68,6 +69,16 @@ function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const user = useSelector((state) => state.signInReducer.user);
+
+  React.useEffect(() => {
+    if (!user) {
+      history.push('/');
+    } else if (user.type !== 'lecturer') {
+      history.push('/');
+    }
+  }, [user]);
+
   const [city, setCity] = React.useState('');
   const [state, setState] = React.useState('');
   const [aboutMe, setAboutMe] = React.useState('');
@@ -94,6 +105,12 @@ function HomePage() {
   const [selectedDepartment2, setSelectedDepartment2] = React.useState('');
   const [selectedTopics2, setSelectedTopics2] = React.useState([]);
 
+  const [gitHub, setGitHub] = React.useState('');
+  const [linkedIn, setLinkedIn] = React.useState('');
+  const [personalPortfolio, setPersonalPortfolio] = React.useState('');
+  const [blog, setBlog] = React.useState('');
+  const [twitter, setTwitter] = React.useState('');
+
   const classes = useStyles();
 
   const submit = () => {
@@ -106,7 +123,27 @@ function HomePage() {
       inPerson,
       education: [],
       recruitingDepartment: [],
+      socialMedia: [],
     };
+
+    if (gitHub) {
+      req.socialMedia.push({ platform: 'GitHub', link: gitHub });
+    }
+    if (linkedIn) {
+      req.socialMedia.push({ platform: 'LinkedIn', link: linkedIn });
+    }
+    if (personalPortfolio) {
+      req.socialMedia.push({
+        platform: 'PersonalPortfolio',
+        link: personalPortfolio,
+      });
+    }
+    if (blog) {
+      req.socialMedia.push({ platform: 'Blog', link: blog });
+    }
+    if (twitter) {
+      req.socialMedia.push({ platform: 'Twitter', link: twitter });
+    }
 
     if (education1.level !== 'Level') {
       req.education.push(education1);
@@ -132,6 +169,7 @@ function HomePage() {
       req.recruitingDepartment.push(reqSelectedDepartment2);
     }
     console.log(req);
+    dispatch(lecturerCompleteProfile(req));
   };
 
   return (
@@ -524,8 +562,8 @@ function HomePage() {
             >
               <div style={{ width: 100 }}>GitHub</div>
               <TextField
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                value={gitHub}
+                onChange={(e) => setGitHub(e.target.value)}
                 inputProps={{
                   style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
                 }}
@@ -548,8 +586,8 @@ function HomePage() {
             >
               <div style={{ width: 100 }}> LinkedIn</div>
               <TextField
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                value={linkedIn}
+                onChange={(e) => setLinkedIn(e.target.value)}
                 inputProps={{
                   style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
                 }}
@@ -572,8 +610,8 @@ function HomePage() {
             >
               <div style={{ width: 100 }}>Personal Portfolio</div>
               <TextField
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                value={personalPortfolio}
+                onChange={(e) => setPersonalPortfolio(e.target.value)}
                 inputProps={{
                   style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
                 }}
@@ -596,8 +634,8 @@ function HomePage() {
             >
               <div style={{ width: 100 }}>Blog</div>
               <TextField
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                value={blog}
+                onChange={(e) => setBlog(e.target.value)}
                 inputProps={{
                   style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
                 }}
@@ -620,8 +658,8 @@ function HomePage() {
             >
               <div style={{ width: 100 }}>Twitter</div>
               <TextField
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                value={twitter}
+                onChange={(e) => setTwitter(e.target.value)}
                 inputProps={{
                   style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
                 }}

@@ -8,6 +8,7 @@ import SignInPage from './pages/SignIn/SignInPage';
 import SignUpPage from './pages/Signup/SignUpPage';
 import ProfessorCompleteProfilePage from './pages/ProfessorCompleteProfile/ProfessorCompleteProfilePage';
 import LecturerCompleteProfilePage from './pages/LecturerCompleteProfile/LecturerCompleteProfilePage';
+import ProfilePage from './pages/Profile/ProfilePage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             path="/complete-profile/lecturer"
             component={LecturerCompleteProfilePage}
           />
+          <Route exact path="/profile" component={ProfilePage} />
         </Switch>
       </Router>
       <ToastContainer />

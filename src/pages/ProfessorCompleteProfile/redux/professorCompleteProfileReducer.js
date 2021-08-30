@@ -1,77 +1,28 @@
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import * as actionTypes from './homeActionTypes';
+import * as actionTypes from './professorCompleteProfileTypes';
 
-const initialState = {
-  name: 'Home Page',
-  loginFormOpen: false,
-  RegisterFormOpen: false,
-  loading: false,
-  notifications: [],
-};
+const initialState = { loading: false };
 
 // all the home page actions are handled here
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.OPEN_CLOSE_FORMS:
-      return { ...state, ...action.data };
-    case actionTypes.LOGIN:
+    case actionTypes.PROF_EDIT_PROFILE:
       return {
         ...state,
         loading: true,
       };
-    case actionTypes.LOGIN_SUCCESS:
-      return {
-        ...state,
-        loginFormOpen: false,
-        user: action.data.user,
-        idToken: action.data.token,
-        loading: false,
-      };
-    case actionTypes.LOGIN_ERROR:
+    case actionTypes.PROF_EDIT_PROFILE_SUCCESS:
       return {
         ...state,
         loading: false,
       };
-    case actionTypes.LOG_OUT:
-      return {
-        ...state,
-        loginFormOpen: false,
-        user: undefined,
-        idToken: undefined,
-      };
-    case actionTypes.REGISTER:
-      return {
-        ...state,
-        loading: true,
-      };
-    case actionTypes.REGISTER_SUCCESS:
-      return {
-        ...state,
-        RegisterFormOpen: false,
-        loginFormOpen: true,
-        loading: false,
-      };
-    case actionTypes.REGISTER_ERROR:
+    case actionTypes.PROF_EDIT_PROFILE_ERROR:
       return {
         ...state,
         loading: false,
-      };
-    case actionTypes.GET_NOTIFICATIONS_SUCCESS:
-      return {
-        ...state,
-        notifications: action.data.result,
       };
     default:
       return state;
   }
 }
 
-const persistConfig = {
-  keyPrefix: 'fcode-',
-  key: 'cartlist',
-  blacklist: ['loading'],
-  storage,
-};
-
-export default persistReducer(persistConfig, reducer);
+export default reducer;

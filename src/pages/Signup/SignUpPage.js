@@ -6,6 +6,7 @@ import { TextField } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
+import { registerUser } from './redux/signUpActions';
 
 const useStyles = makeStyles(() => ({
   btn: {
@@ -27,7 +28,18 @@ function HomePage({ match }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
   const classes = useStyles();
+
+  const registerThisUser = () => {
+    dispatch(
+      registerUser(match.params.type, { firstName, lastName, email, password })
+    );
+  };
 
   return (
     <div>
@@ -65,6 +77,8 @@ function HomePage({ match }) {
                 style: { WebkitBoxShadow: '0 0 0 1000px white inset' },
               }}
               style={{ background: 'white' }}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               fullWidth
               size="small"
               type="text"
@@ -80,6 +94,8 @@ function HomePage({ match }) {
               }}
               style={{ background: 'white' }}
               fullWidth
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               size="small"
               type="text"
               variant="outlined"
@@ -94,6 +110,8 @@ function HomePage({ match }) {
               }}
               style={{ background: 'white' }}
               fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               size="small"
               type="email"
               variant="outlined"
@@ -108,13 +126,19 @@ function HomePage({ match }) {
               }}
               style={{ background: 'white' }}
               fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               size="small"
               variant="outlined"
               placeholder="Password"
             />
           </div>
-          <div style={{ marginTop: 35 }} className={classes.btn}>
+          <div
+            style={{ marginTop: 35 }}
+            onClick={registerThisUser}
+            className={classes.btn}
+          >
             SIGN UP
           </div>
         </div>
