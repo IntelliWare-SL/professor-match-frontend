@@ -424,7 +424,7 @@ function HomePage() {
           <Grid container spacing={2} style={{ marginTop: 40 }}>
             <Grid item xs={12}>
               <span className={classes.formTitle}>
-                For which Functional department are you recruiting?
+                In which areas do you want to provide guest lecture(s)?
               </span>
             </Grid>
             <Grid item xs={5}>

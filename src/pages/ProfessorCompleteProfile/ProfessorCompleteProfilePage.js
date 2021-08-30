@@ -2,12 +2,19 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
-import { Checkbox, Grid, MenuItem, Select, TextField } from '@material-ui/core';
+import {
+  Avatar,
+  Checkbox,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+} from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
 import { profCompleteProfile } from './redux/professorCompleteProfileActions';
-import signInReducer from '../SignIn/redux/signInReducer';
 
 const departments = [
   {
@@ -96,6 +103,8 @@ function HomePage() {
     zoom: true,
   });
 
+  const [profilePic, setProfilePic] = React.useState('');
+
   const classes = useStyles();
 
   const submit = () => {
@@ -107,6 +116,7 @@ function HomePage() {
       discipline,
       role: [],
       recruitingDepartment: [],
+      // img: profilePic,
     };
 
     if (wantGuestLecturer.checked) {
@@ -142,6 +152,20 @@ function HomePage() {
     }
     console.log(req);
     dispatch(profCompleteProfile(req));
+  };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const previewImage = async (event) => {
+    const base64DataString = await getBase64(event.target.files[0]);
+    setProfilePic(base64DataString);
   };
 
   return (
@@ -470,10 +494,52 @@ function HomePage() {
               </Select>
             </Grid>
           </Grid>
+          <Grid container spacing={2} style={{ marginTop: 40 }}>
+            <Grid item xs={12}>
+              <span className={classes.formTitle}>Profile Picture</span>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <div style={{ position: 'relative' }}>
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  id="icon-button-file"
+                  type="file"
+                  multiple
+                  onChange={previewImage}
+                />
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label htmlFor="icon-button-file">
+                  <Avatar
+                    alt="A"
+                    src={profilePic}
+                    style={{ height: 150, width: 150 }}
+                  />
+                  <AddCircleIcon
+                    style={{
+                      color: 'black',
+                      cursor: 'pointer',
+                      fontSize: 50,
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                    }}
+                  />
+                </label>
+              </div>
+            </Grid>
+          </Grid>
         </div>
         <div
           style={{
-            marginTop: 40,
+            marginTop: 60,
             display: 'flex',
             justifyContent: 'flex-end',
           }}
