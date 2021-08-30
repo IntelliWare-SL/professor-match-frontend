@@ -12,11 +12,14 @@ export function* lecturerCompleteProfile(action) {
       `lecturer/editLecturer/${user._id}`,
       action.data
     );
-    window.location.href = '/profile';
+    yield put({
+      type: 'PROFILE_COMPLETED',
+    });
     yield put({
       type: actionTypes.LECTURER_EDIT_PROFILE_SUCCESS,
       data,
     });
+    window.location.href = '/profile';
   } catch (error) {
     yield put({
       type: actionTypes.LECTURER_EDIT_PROFILE_ERROR,

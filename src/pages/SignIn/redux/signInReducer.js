@@ -32,6 +32,11 @@ function reducer(state = initialState, action) {
         idToken: undefined,
         user: undefined,
       };
+    case actionTypes.PROFILE_COMPLETED:
+      return {
+        ...state,
+        user: { ...state.user, isProfileCompleted: true },
+      };
     default:
       return state;
   }
