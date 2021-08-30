@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SignInPage from './pages/SignIn/SignInPage';
 import SignUpPage from './pages/Signup/SignUpPage';
 import ProfessorCompleteProfilePage from './pages/ProfessorCompleteProfile/ProfessorCompleteProfilePage';
+import LecturerCompleteProfilePage from './pages/LecturerCompleteProfile/LecturerCompleteProfilePage';
 
 function App() {
   return (
@@ -24,6 +25,11 @@ function App() {
             exact
             path="/complete-profile/professor"
             component={ProfessorCompleteProfilePage}
+          />
+          <Route
+            exact
+            path="/complete-profile/lecturer"
+            component={LecturerCompleteProfilePage}
           />
         </Switch>
       </Router>

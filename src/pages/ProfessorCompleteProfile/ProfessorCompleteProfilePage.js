@@ -163,7 +163,7 @@ function HomePage() {
                 }}
                 style={{ background: 'white' }}
                 fullWidth
-                size="small"
+                size="medium"
                 type="text"
                 variant="outlined"
                 placeholder="School Name"
@@ -178,7 +178,7 @@ function HomePage() {
                 }}
                 style={{ background: 'white' }}
                 fullWidth
-                size="small"
+                size="medium"
                 type="text"
                 variant="outlined"
                 placeholder="Campus Location"
@@ -193,7 +193,7 @@ function HomePage() {
                 }}
                 style={{ background: 'white' }}
                 fullWidth
-                size="small"
+                size="medium"
                 type="text"
                 variant="outlined"
                 placeholder="College"
@@ -208,7 +208,7 @@ function HomePage() {
                 }}
                 style={{ background: 'white' }}
                 fullWidth
-                size="small"
+                size="medium"
                 type="text"
                 variant="outlined"
                 placeholder="Discipline / Functional area of teaching"
@@ -223,7 +223,7 @@ function HomePage() {
                 }}
                 style={{ background: 'white' }}
                 fullWidth
-                size="small"
+                size="medium"
                 type="text"
                 variant="outlined"
                 placeholder="Department"
