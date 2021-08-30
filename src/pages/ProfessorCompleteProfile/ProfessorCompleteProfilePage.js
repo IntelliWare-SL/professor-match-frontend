@@ -390,16 +390,18 @@ function HomePage() {
                 }}
                 style={{ width: 200, marginLeft: 30 }}
               >
-                {departments.map((department, index) => (
-                  <MenuItem
-                    // disabled={selectedTopics1.indexOf(topic) <= -1}
-                    value={department.department}
-                    key={index}
-                    style={{ height: 40 }}
-                  >
-                    <span>{department.department}</span>
-                  </MenuItem>
-                ))}
+                {departments
+                  .filter((el) => el.department !== selectedDepartment2)
+                  .map((department, index) => (
+                    <MenuItem
+                      // disabled={selectedTopics1.indexOf(topic) <= -1}
+                      value={department.department}
+                      key={index}
+                      style={{ height: 40 }}
+                    >
+                      <span>{department.department}</span>
+                    </MenuItem>
+                  ))}
               </Select>
             </Grid>
             <Grid item xs={7} style={{ textAlign: 'right' }}>
@@ -450,16 +452,18 @@ function HomePage() {
                 }}
                 style={{ width: 200, marginLeft: 30 }}
               >
-                {departments.map((department, index) => (
-                  <MenuItem
-                    // disabled={selectedTopics1.indexOf(topic) <= -1}
-                    value={department.department}
-                    key={index}
-                    style={{ height: 40 }}
-                  >
-                    <span>{department.department}</span>
-                  </MenuItem>
-                ))}
+                {departments
+                  .filter((el) => el.department !== selectedDepartment1)
+                  .map((department, index) => (
+                    <MenuItem
+                      // disabled={selectedTopics1.indexOf(topic) <= -1}
+                      value={department.department}
+                      key={index}
+                      style={{ height: 40 }}
+                    >
+                      <span>{department.department}</span>
+                    </MenuItem>
+                  ))}
               </Select>
             </Grid>
             <Grid item xs={7} style={{ textAlign: 'right' }}>
