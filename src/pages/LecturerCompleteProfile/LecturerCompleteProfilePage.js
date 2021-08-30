@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+  Avatar,
   Checkbox,
   Grid,
   MenuItem,
@@ -11,9 +12,12 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
 import { lecturerCompleteProfile } from './redux/lecturerCompleteProfileActions';
+import { storage } from '../../config/firebase.config';
 
 const departments = [
   {
@@ -111,6 +115,9 @@ function HomePage() {
   const [blog, setBlog] = React.useState('');
   const [twitter, setTwitter] = React.useState('');
 
+  const [profilePic, setProfilePic] = React.useState('');
+  const [profilePicURL, setProfilePicURL] = React.useState('');
+
   const classes = useStyles();
 
   const submit = () => {
@@ -124,6 +131,7 @@ function HomePage() {
       education: [],
       recruitingDepartment: [],
       socialMedia: {},
+      url: profilePicURL,
     };
 
     if (gitHub) {
@@ -167,6 +175,21 @@ function HomePage() {
     }
     console.log(req);
     dispatch(lecturerCompleteProfile(req));
+  };
+
+  const previewImage = async (event) => {
+    setProfilePic(URL.createObjectURL(event.target.files[0]));
+    const storageRef = ref(
+      storage,
+      `${user._id}/${event.target.files[0].name}`
+    );
+    uploadBytes(storageRef, event.target.files[0]).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        console.log(downloadURL);
+        setProfilePicURL(downloadURL);
+      });
+    });
   };
 
   return (
@@ -672,10 +695,52 @@ function HomePage() {
               />
             </Grid>
           </Grid>
+          <Grid container spacing={2} style={{ marginTop: 40 }}>
+            <Grid item xs={12}>
+              <span className={classes.formTitle}>Profile Picture</span>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <div style={{ position: 'relative' }}>
+                <input
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  id="icon-button-file"
+                  type="file"
+                  multiple
+                  onChange={previewImage}
+                />
+                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                <label htmlFor="icon-button-file">
+                  <Avatar
+                    alt="A"
+                    src={profilePic}
+                    style={{ height: 150, width: 150 }}
+                  />
+                  <AddCircleIcon
+                    style={{
+                      color: 'black',
+                      cursor: 'pointer',
+                      fontSize: 50,
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                    }}
+                  />
+                </label>
+              </div>
+            </Grid>
+          </Grid>
         </div>
         <div
           style={{
-            marginTop: 40,
+            marginTop: 60,
             display: 'flex',
             justifyContent: 'flex-end',
           }}

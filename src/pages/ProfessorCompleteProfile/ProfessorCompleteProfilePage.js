@@ -12,6 +12,13 @@ import {
 } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+  uploadBytes,
+} from 'firebase/storage';
+import { storage } from '../../config/firebase.config';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
 import { profCompleteProfile } from './redux/professorCompleteProfileActions';
@@ -104,6 +111,7 @@ function HomePage() {
   });
 
   const [profilePic, setProfilePic] = React.useState('');
+  const [profilePicURL, setProfilePicURL] = React.useState('');
 
   const classes = useStyles();
 
@@ -116,7 +124,7 @@ function HomePage() {
       discipline,
       role: [],
       recruitingDepartment: [],
-      // img: profilePic,
+      img: profilePicURL,
     };
 
     if (wantGuestLecturer.checked) {
@@ -154,18 +162,19 @@ function HomePage() {
     dispatch(profCompleteProfile(req));
   };
 
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   const previewImage = async (event) => {
-    const base64DataString = await getBase64(event.target.files[0]);
-    setProfilePic(base64DataString);
+    setProfilePic(URL.createObjectURL(event.target.files[0]));
+    const storageRef = ref(
+      storage,
+      `${user._id}/${event.target.files[0].name}`
+    );
+    uploadBytes(storageRef, event.target.files[0]).then((snapshot) => {
+      console.log('Uploaded a blob or file!');
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        console.log(downloadURL);
+        setProfilePicURL(downloadURL);
+      });
+    });
   };
 
   return (
