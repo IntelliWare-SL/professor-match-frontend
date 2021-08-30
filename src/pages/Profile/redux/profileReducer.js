@@ -2,6 +2,8 @@ import * as actionTypes from './profileTypes';
 
 const initialState = {
   loading: false,
+  user: {},
+  details: { recruitingDepartment: [] },
 };
 
 // all the home page actions are handled here
@@ -15,6 +17,7 @@ function reducer(state = initialState, action) {
     case actionTypes.GET_PROFILE_SUCCESS:
       return {
         ...state,
+        ...action.data,
         loading: false,
       };
     case actionTypes.GET_PROFILE_ERROR:

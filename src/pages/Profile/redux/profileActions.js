@@ -1,6 +1,6 @@
-import * as actionTypes from './lecturerCompleteProfileTypes';
+import * as actionTypes from './profileTypes';
 
 // Actions happening in home page
-export function lecturerCompleteProfile(data) {
-  return { type: actionTypes.LECTURER_EDIT_PROFILE, data };
+export function getProfile(data) {
+  return { type: actionTypes.GET_PROFILE, data };
 }

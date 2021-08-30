@@ -123,26 +123,23 @@ function HomePage() {
       inPerson,
       education: [],
       recruitingDepartment: [],
-      socialMedia: [],
+      socialMedia: {},
     };
 
     if (gitHub) {
-      req.socialMedia.push({ platform: 'GitHub', link: gitHub });
+      req.socialMedia.GitHub = gitHub;
     }
     if (linkedIn) {
-      req.socialMedia.push({ platform: 'LinkedIn', link: linkedIn });
+      req.socialMedia.LinkedIn = linkedIn;
     }
     if (personalPortfolio) {
-      req.socialMedia.push({
-        platform: 'PersonalPortfolio',
-        link: personalPortfolio,
-      });
+      req.socialMedia.PersonalPortfolio = personalPortfolio;
     }
     if (blog) {
-      req.socialMedia.push({ platform: 'Blog', link: blog });
+      req.socialMedia.Blog = blog;
     }
     if (twitter) {
-      req.socialMedia.push({ platform: 'Twitter', link: twitter });
+      req.socialMedia.Twitter = twitter;
     }
 
     if (education1.level !== 'Level') {

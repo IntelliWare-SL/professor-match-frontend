@@ -4,10 +4,14 @@ import createRequest from '../../../utils/axios';
 import * as actionTypes from './profileTypes';
 
 // this is the request to login a user
-export function* lecturerCompleteProfile(action) {
+export function* getProfile(action) {
   const Axios = yield createRequest();
+  const user = yield select((state) => state.signInReducer.user);
   try {
-    const { data } = yield Axios.post(`${action.data.type}/login`, action.data);
+    const { data } = yield Axios.get(
+      user.type === 'lecturer' ? `lecturer/me` : 'professor/me',
+      action.data
+    );
     yield put({
       type: actionTypes.GET_PROFILE_SUCCESS,
       data,

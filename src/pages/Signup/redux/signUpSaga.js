@@ -4,7 +4,6 @@ import createRequest from '../../../utils/axios';
 import * as actionTypes from './signUpActionTypes';
 
 export function* registerUser(action) {
-  console.log(action);
   const Axios = yield createRequest();
   try {
     const { data } = yield Axios.post(

@@ -4,6 +4,7 @@ import signUpReducer from '../pages/Signup/redux/signUpReducer';
 import signInReducer from '../pages/SignIn/redux/signInReducer';
 import lecturerCompleteProfileReducer from '../pages/LecturerCompleteProfile/redux/lecturerCompleteProfileReducer';
 import professorCompleteProfileReducer from '../pages/ProfessorCompleteProfile/redux/professorCompleteProfileReducer';
+import profileReducer from '../pages/Profile/redux/profileReducer';
 
 // combining all the reducers in here
 export default combineReducers({
@@ -12,4 +13,5 @@ export default combineReducers({
   signInReducer,
   lecturerCompleteProfileReducer,
   professorCompleteProfileReducer,
+  profileReducer,
 });
