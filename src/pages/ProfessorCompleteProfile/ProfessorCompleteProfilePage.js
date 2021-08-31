@@ -4,11 +4,13 @@ import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
+  Box,
   Checkbox,
   Grid,
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -18,10 +20,38 @@ import {
   uploadBytesResumable,
   uploadBytes,
 } from 'firebase/storage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { storage } from '../../config/firebase.config';
 import Header from '../../common/Header';
 import Footer from '../Home/components/Footer';
 import { profCompleteProfile } from './redux/professorCompleteProfileActions';
+
+function CircularProgressWithLabel(props) {
+  return (
+    <Box position="relative" display="inline-flex">
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        top={0}
+        left={0}
+        bottom={0}
+        right={0}
+        position="absolute"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography
+          variant="caption"
+          component="div"
+          color="textSecondary"
+        >{`${Math.round(
+          // eslint-disable-next-line react/destructuring-assignment
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
 
 const departments = [
   {
@@ -78,6 +108,9 @@ function HomePage() {
   const history = useHistory();
 
   const user = useSelector((state) => state.signInReducer.user);
+
+  const [uploadPercentage, setUploadPercentage] = React.useState(0);
+  const [imageUploading, setImageUploading] = React.useState(false);
 
   React.useEffect(() => {
     if (!user) {
@@ -163,18 +196,53 @@ function HomePage() {
   };
 
   const previewImage = async (event) => {
+    setImageUploading(true);
     setProfilePic(URL.createObjectURL(event.target.files[0]));
     const storageRef = ref(
       storage,
       `${user._id}/${event.target.files[0].name}`
     );
-    uploadBytes(storageRef, event.target.files[0]).then((snapshot) => {
+    const uploadTask = uploadBytesResumable(storageRef, event.target.files[0]);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadPercentage(progress);
+        console.log(`Upload is ${progress}% done`);
+        // eslint-disable-next-line default-case
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+        setImageUploading(false);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageUploading(false);
+          console.log(downloadURL);
+          setProfilePicURL(downloadURL);
+        });
+      }
+    );
+
+    /* uploadBytes(storageRef, event.target.files[0]).then((snapshot) => {
       console.log('Uploaded a blob or file!');
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         console.log(downloadURL);
         setProfilePicURL(downloadURL);
       });
-    });
+    }); */
   };
 
   return (
@@ -511,43 +579,64 @@ function HomePage() {
             <Grid item xs={12}>
               <span className={classes.formTitle}>Profile Picture</span>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <div style={{ position: 'relative' }}>
-                <input
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  id="icon-button-file"
-                  type="file"
-                  multiple
-                  onChange={previewImage}
-                />
-                {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                <label htmlFor="icon-button-file">
-                  <Avatar
-                    alt="A"
-                    src={profilePic}
-                    style={{ height: 150, width: 150 }}
-                  />
-                  <AddCircleIcon
-                    style={{
-                      color: 'black',
-                      cursor: 'pointer',
-                      fontSize: 50,
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                    }}
-                  />
-                </label>
-              </div>
-            </Grid>
+            {imageUploading ? (
+              <Grid
+                item
+                xs={12}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: 40,
+                }}
+              >
+                <div>
+                  <div style={{ textAlign: 'center', marginBottom: 5 }}>
+                    <CircularProgressWithLabel value={uploadPercentage} />
+                  </div>
+                  <div>Image Uploading ...</div>
+                </div>
+              </Grid>
+            ) : (
+              <>
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <div style={{ position: 'relative' }}>
+                    <input
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      id="icon-button-file"
+                      type="file"
+                      multiple
+                      onChange={previewImage}
+                    />
+                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                    <label htmlFor="icon-button-file">
+                      <Avatar
+                        alt="A"
+                        src={profilePic}
+                        style={{ height: 150, width: 150 }}
+                      />
+                      <AddCircleIcon
+                        style={{
+                          color: 'black',
+                          cursor: 'pointer',
+                          fontSize: 50,
+                          position: 'absolute',
+                          bottom: 0,
+                          right: 0,
+                        }}
+                      />
+                    </label>
+                  </div>
+                </Grid>
+              </>
+            )}
           </Grid>
         </div>
         <div
