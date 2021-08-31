@@ -169,7 +169,7 @@ function HomePage() {
       education: [],
       recruitingDepartment: [],
       socialMedia: {},
-      url: profilePicURL,
+      img: profilePicURL,
     };
 
     if (gitHub) {
