@@ -94,7 +94,7 @@ function HomePage() {
           >
             <Grid xs={3} style={{ paddingRight: 30 }} item>
               <Avatar
-                alt={details.img ? details.img : ''}
+                src={details.img ? details.img : ''}
                 style={{ height: 150, width: 150, marginLeft: 17 }}
               />
               {main.type === 'lecturer' && (
